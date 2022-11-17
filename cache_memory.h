@@ -2,17 +2,17 @@
 #include <list>
 #include <iterator>
 #include <unordered_map>
-
+#include <stack>
 
 typedef std::list <int> List;
-typedef std::unordered_map<int, List> Hash_Table;
+typedef std::unordered_map<int, List> LFU_Hash_Table;
+typedef std::unordered_map<int, List::iterator> LRU_Hash_Table;
 
-class Cache_Memory
+class LFU_MEMORY final
 {
     private:
-    List* line;
-
-    Hash_Table cache;
+    List* line_;
+    LFU_Hash_Table cache_;
 
     int size_cache = 0;
     int max_size_cache = 0;
@@ -20,40 +20,30 @@ class Cache_Memory
     int hits_in_cache = 0; 
     
     public:
-    Cache_Memory(int max_size);
-    ~Cache_Memory();
-
-    void LFU_Cache (const int element);
+    LFU_MEMORY(int max_size);
+    ~LFU_MEMORY();
+    
     bool LFU_Search_Element (const int element);
     void LFU_Push_Cache (const int element);
-    void Print_Hash_Table();
+    void LFU_Print();
 };
 
-Cache_Memory::Cache_Memory(int max_size)
+class LRU_MEMORY final
 {
-    max_size_cache = max_size;
-    max_lvl = 10;
+    private:
+    List line_;
+    LRU_Hash_Table cache_;
 
-    line = new List[10]; 
-    Hash_Table::key_type key = max_lvl - 1; 
+    int size_cache = 0;
+    int max_size_cache = 0;
+    int hits_in_cache = 0; 
 
-    for(int i = 0; i < max_lvl ; i++)
-    {  
-        cache[key] = line[i];
-        key--;
-    }
-}
-Cache_Memory::~Cache_Memory()
-{
-    int i = 0;
+    public:
+    LRU_MEMORY(int max_size);
+    ~LRU_MEMORY();
 
-    while(i < 10)
-    {
-        line[i].clear();
-        i++;
-    }
+    void LRU_Push_Cache (const int element);
+    bool LRU_Search_Element (const int element);
+    void LRU_Print ( );
+};
 
-    cache.clear();
-
-    delete [] line;
-}
