@@ -52,8 +52,7 @@ bool LFU_MEMORY::LFU_Search_Element(const int element){
     return true;
 }
 
-void LFU_MEMORY::LFU_Push_Cache(const int element)
-{
+void LFU_MEMORY::LFU_Push_Cache(const int element){
     if(LFU_Search_Element(element)){
         LFU_Hash_Table::iterator Hash_Iter = cache_.begin();
 
@@ -69,8 +68,7 @@ void LFU_MEMORY::LFU_Push_Cache(const int element)
     }
 }
 
-void LFU_MEMORY::LFU_Print()
-{   
+void LFU_MEMORY::LFU_Print(){   
     std::cout << "-----Print cache-----" << std::endl;
     for(LFU_Hash_Table::iterator it = cache_.begin(); it!= cache_.end(); ++it)
     {   

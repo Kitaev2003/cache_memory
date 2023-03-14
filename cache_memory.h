@@ -2,7 +2,7 @@
 #include <list>
 #include <iterator>
 #include <unordered_map>
-#include <stack>
+#include <gtest/gtest.h>
 
 typedef std::list <int> List;
 typedef std::unordered_map<int, List> LFU_Hash_Table;
@@ -17,9 +17,10 @@ class LFU_MEMORY final
     int size_cache = 0;
     int max_size_cache = 0;
     int max_lvl = 0;
-    int hits_in_cache = 0; 
     
     public:
+    int hits_in_cache = 0; 
+    
     LFU_MEMORY(int max_size);
     ~LFU_MEMORY();
     
@@ -34,11 +35,11 @@ class LRU_MEMORY final
     List line_;
     LRU_Hash_Table cache_;
 
-    int size_cache = 0;
     int max_size_cache = 0;
-    int hits_in_cache = 0; 
 
     public:
+    int hits_in_cache = 0; 
+
     LRU_MEMORY(int max_size);
     ~LRU_MEMORY();
 
